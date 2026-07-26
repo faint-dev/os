@@ -27,7 +27,7 @@ jq
 yq
 tldr
 nmap
-dig
+bind
 whois
 ugrep
 sd

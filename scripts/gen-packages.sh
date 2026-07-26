@@ -11,15 +11,15 @@ if [ ! -d "$PACKAGES_DIR" ]; then
   exit 1
 fi
 
-# Concatenate all .txt files (except packages.x86_64) into the output
+# Concatenate all .txt files, strip comments/blanks, and deduplicate.
+# sort -u prevents duplicate entries across category files from
+# double-installing or masking a typo'd variant.
 {
   for txt_file in "$PACKAGES_DIR"/*.txt; do
     if [ -f "$txt_file" ]; then
-      echo "# From $(basename "$txt_file")"
       grep -v '^#' "$txt_file" | grep -v '^[[:space:]]*$' || true
-      echo
     fi
   done
-} > "$OUTPUT_FILE"
+} | sort -u > "$OUTPUT_FILE"
 
-echo "Generated $OUTPUT_FILE ($(wc -l < "$OUTPUT_FILE") lines)"
+echo "Generated $OUTPUT_FILE ($(wc -l < "$OUTPUT_FILE") unique packages)"

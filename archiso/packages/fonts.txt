@@ -5,7 +5,7 @@ ttf-ubuntu-font-family
 noto-fonts
 noto-fonts-emoji
 noto-fonts-cjk
+noto-fonts-extra
 ttf-dejavu
-liberation-fonts
 ttf-liberation
 fontconfig

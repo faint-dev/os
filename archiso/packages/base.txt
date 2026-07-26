@@ -4,7 +4,6 @@ linux-lts
 linux-firmware
 intel-ucode
 systemd
-systemd-boot
 efibootmgr
 dosfstools
 lvm2
@@ -12,4 +11,4 @@ cryptsetup
 mdadm
 mkinitcpio
 mkinitcpio-archiso
-os-prober
+zram-generator

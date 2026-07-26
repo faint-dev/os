@@ -24,9 +24,13 @@ Total: ~6–8 seconds
 ```
 quiet              # Suppress verbose kernel output (saves 500ms)
 intel_pstate=passive  # Better CPU scaling, faster startup
-zram.enabled=1     # In-memory swap (faster than disk)
 root=UUID=...      # Direct root specification (no PARTUUID lookup)
 ```
+
+**Note:** swap-on-zram needs *no* kernel parameter — it's configured by
+`zram-generator` via `/etc/systemd/zram-generator.conf` (4GB zstd-compressed
+swap on the 8GB L13). Verify with `zramctl` and
+`systemctl status systemd-zram-setup@zram0.service`.
 
 **Before:** `quiet splash` (Plymouth takes 1–2 sec)
 **After:** `quiet only` (skip Plymouth, go straight to SDDM)
@@ -69,15 +73,15 @@ Systemd starts these **in parallel**, not sequentially.
 
 ### 5. Filesystem Tuning (EXT4)
 
-Post-install, add to `/etc/fstab`:
+Applied **automatically by the installer** (Calamares `fstab.conf`):
 ```
-/dev/nvme0n1p2  /       ext4  defaults,noatime,discard=async,commit=60  0  1
-/dev/nvme0n1p3  /home   ext4  defaults,noatime,discard=async,commit=60  0  2
+/  and /home:  ext4  defaults,noatime,commit=60
 ```
 
 - `noatime`: Skip inode timestamp updates (no disk writes on reads)
-- `discard=async`: TRIM in background (SSD optimization)
 - `commit=60`: Flush journal every 60 seconds (vs 5 sec default)
+- TRIM: handled by `fstrim.timer` (enabled by default) — periodic trim is
+  preferred over the `discard` mount option on ext4
 
 ### 6. Boot Splash (Removed)
 
@@ -202,7 +206,8 @@ Old/degraded SSD = slow boot. Consider `wear_leveling=on` in TLP.
 - [x] No Plymouth splash (skip animation)
 - [x] TLP power profiles tuned
 - [x] Intel pstate passive mode
-- [x] EXT4 noatime + async trim
+- [x] EXT4 noatime (installer fstab.conf) + fstrim.timer
+- [x] Swap-on-zram via zram-generator (`/etc/systemd/zram-generator.conf`)
 
 **Total boot time: 6–8 seconds on typical L13.**
 

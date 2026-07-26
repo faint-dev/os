@@ -1,21 +1,20 @@
+# Hyprland session (secondary Wayland session at login)
 hyprland
 hyprlock
 hypridle
 hyprpaper
-xwayland
-wayland
-wayland-protocols
-libxcb
-libxkbcommon
-pixman
-wl-clipboard
-wl-paste
-wl-copy
-hyprutils
-hyprcursor
+xorg-xwayland
 waybar
 wofi
 mako
 kitty
+wl-clipboard
+
+# Screenshot + brightness tools (bound in hyprland.conf)
+grim
+slurp
+brightnessctl
+
+# Wallpaper daemon + image viewer
 swww
 swayimg

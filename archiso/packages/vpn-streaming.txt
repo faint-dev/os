@@ -1,4 +1,5 @@
-# VPN and Streaming Services
-nordvpn
+# Network utilities
+# NOTE: NordVPN is AUR-only (nordvpn-bin) and cannot be resolved by pacstrap.
+# It is installed post-install via the interactive `zog-post-install` script
+# (along with Discord, Spotify, and Spicetify).
 speedtest-cli
-python-pynvim

@@ -16,6 +16,9 @@ enable bluetooth.service
 # Security
 enable ufw.service
 
+# SSD maintenance (periodic TRIM — preferred over the discard mount option)
+enable fstrim.timer
+
 # Disable bloat (conflicts, slow startup)
 disable power-profiles-daemon.service
 disable power-profiles-daemon.socket

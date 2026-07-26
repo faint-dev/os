@@ -77,7 +77,9 @@ Intel Xe iGPU is capable for light workloads:
 8 GB is tight for modern development but workable:
 - Typical idle: ~1.5–2 GB used (Plasma + Firefox + a few apps)
 - Under load: can hit 7+ GB (Docker, multiple VMs, etc.)
-- **Zram swap enabled:** Adds ~2–3 GB virtual swap (compressed in-memory)
+- **Zram swap enabled:** `zram-generator` creates a 4GB zstd-compressed swap
+  device in RAM (`min(ram/2, 4096)` — see `/etc/systemd/zram-generator.conf`).
+  Verify with `zramctl` or `swapon --show`.
 - Recommendation: avoid having 20+ browser tabs + multiple heavy apps simultaneously
 
 ### Storage (256 GB)

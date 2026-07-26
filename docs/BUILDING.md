@@ -78,14 +78,25 @@ make test  # Boots ISO in QEMU, exits on login screen
 
 ## Troubleshooting
 
-### Build fails: "chaotic-aur key not found"
+### Build fails: "chaotic-aur key not found" / "no secret key available to sign with"
 
-The GitHub Actions workflow imports the Chaotic AUR GPG key automatically. For local builds:
+The GitHub Actions workflow bootstraps the Chaotic AUR keyring automatically. For
+local builds on Arch, run the full bootstrap (the keyring must be initialized
+first — skipping `--init`/`--populate` causes "There is no secret key available
+to sign with"):
 
 ```bash
-pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-pacman-key --lsign-key 3056513887B78AEB
+sudo pacman-key --init
+sudo pacman-key --populate archlinux
+sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+sudo pacman-key --lsign-key 3056513887B78AEB
+sudo pacman -U \
+  'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
+  'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 ```
+
+`archiso/pacman.conf` references `/etc/pacman.d/chaotic-mirrorlist`, which the
+`chaotic-mirrorlist` package installs on the build host.
 
 ### Package not found
 

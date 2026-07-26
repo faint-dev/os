@@ -65,7 +65,7 @@ GitHub Actions:
 - Root (`/`): 30–50 GB, EXT4
 - Home (`/home`): Remaining space, EXT4
 
-**Bootloader:** systemd-boot (default, simple, Secure Boot-friendly), GRUB as fallback
+**Bootloader:** systemd-boot only (EFI; simple, fast, Secure Boot-friendly). No GRUB.
 
 ### Security Posture
 
@@ -107,8 +107,17 @@ GitHub Actions:
 - **KDE Plasma:** Look-and-feel, color scheme, taskbar layout, window decorations
 - **Hyprland:** `hyprland.conf`, waybar config, wofi launcher, mako notifications
 - **SDDM:** Login screen theme (matches Plasma/Hyprland aesthetic)
-- **GRUB:** Bootloader menu theme (Zog branding)
-- **Wallpapers:** 4 procedurally-generated images (dark/light variants), matching accent colors
+- **Wallpapers:** Procedurally-generated images (dark/light variants), matching accent colors
+
+#### Icons & Cursors
+
+- **Icon theme:** Papirus-Dark (`papirus-icon-theme`, official Arch repo) — set as
+  default in skel `kdeglobals`
+- **Cursor theme:** Bibata Modern Classic (`bibata-cursor-theme-bin` via
+  chaotic-aur, same build-time repo used for Calamares) — wired as the
+  system-wide default (`/usr/share/icons/default/index.theme`), in KDE
+  (`kdeglobals` `[Cursor]`), and in Hyprland (`XCURSOR_THEME`/`XCURSOR_SIZE`
+  env vars)
 
 ### Package Lists (Modular)
 
@@ -134,7 +143,8 @@ GitHub Actions:
 - `/etc/modprobe.d/` – Kernel module tweaks (i915 PSR/FBC, watchdog disabled)
 - `/etc/ufw/` – Firewall rules (default deny incoming)
 - `/etc/systemd/system-preset/` – Services auto-enabled at boot
-- `/etc/default/grub` – Boot parameters (quiet, splash, intel_pstate, zram)
+- `/boot/loader/` – systemd-boot entries (quiet, intel_pstate=passive)
+- `/etc/systemd/zram-generator.conf` – Swap-on-zram (4GB zstd-compressed on 8GB RAM)
 
 ## Build Pipeline
 

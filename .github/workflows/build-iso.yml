@@ -33,12 +33,16 @@ jobs:
         run: |
           pacman -Syu --noconfirm archiso git dosfstools libisoburn
 
-      - name: Import Chaotic AUR key
+      - name: Bootstrap Chaotic AUR keyring and repository
         run: |
+          pacman-key --init
+          pacman-key --populate archlinux
           pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
           pacman-key --lsign-key 3056513887B78AEB
-          echo "[chaotic-aur]" >> /etc/pacman.conf
-          echo "Server = https://chaotic.cx/chaotic-aur/" >> /etc/pacman.conf
+          pacman -U --noconfirm \
+            'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
+            'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+          printf '\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n' >> /etc/pacman.conf
           pacman -Syu --noconfirm
 
       - name: Generate packages

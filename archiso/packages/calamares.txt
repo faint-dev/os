@@ -1,9 +1,4 @@
+# Installer (calamares + ckbcomp from chaotic-aur, build-time repo only;
+# runtime deps like Qt/KDE Frameworks/boost auto-resolve via pacman)
 calamares
 ckbcomp
-boost
-icu
-qt5-base
-qt5-declarative
-qt5-svg
-qt5-tools
-qt5-wayland

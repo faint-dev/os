@@ -5,6 +5,10 @@ font=Inter,11,-1,5,50,0,0,0,0,0
 [Icons]
 Theme=Papirus-Dark
 
+[Cursor]
+Theme=Bibata-Modern-Classic
+Size=24
+
 [Shortcuts]
 ActivateTaskManagerEntry=Meta+1,Meta+1,Activate Task Manager Entry
 ShowDesktop=Meta+D,Meta+D,Show Desktop

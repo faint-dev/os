@@ -1,6 +1,8 @@
+# Browsers
 firefox
 firefox-developer-edition
-kitty
+
+# Development
 code
 base-devel
 cmake
@@ -10,35 +12,48 @@ docker
 docker-compose
 git
 neovim
-vlc
-libreoffice-fresh
-gimp
-flatpak
-steam
-obs-studio
 python
 python-pip
 python-requests
-speedtest-cli
-youtube-dl
-yt-dlp
+
+# Media & creative
+vlc
+libreoffice-fresh
+gimp
+obs-studio
+audacity
 ffmpeg
 imagemagick
+yt-dlp
+
+# Gaming & app distribution
+steam
+flatpak
+
+# Documents
+zathura
+zathura-pdf-mupdf
+calibre
+
+# Desktop essentials
+kitty
 xdg-utils
 xdg-user-dirs
 file-roller
 p7zip
 unrar
-transmission-gtk
 qbittorrent
-calibre
-audacity
+
+# Networking & Bluetooth
 networkmanager
-network-manager-applet
 bluez
 bluez-utils
+
+# Audio utilities
 alsa-utils
 pavucontrol
+
+# Security & secrets
 ufw
 openssh
 keychain
@@ -46,4 +61,9 @@ seahorse
 gnupg
 pass
 keepassxc
+
+# System
+man-db
+man-pages
+syncthing
 dconf-editor

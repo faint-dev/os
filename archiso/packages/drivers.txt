@@ -1,7 +1,16 @@
-xf86-video-intel
+# Intel graphics (11th-gen Xe — modesetting + mesa; VA-API via intel-media-driver)
 mesa
-libva-intel-driver
 intel-media-driver
 vulkan-intel
+
+# Audio stack (PipeWire; ThinkPad L13 11th-gen requires SOF firmware)
+pipewire
+pipewire-alsa
+pipewire-pulse
+pipewire-jack
+wireplumber
+sof-firmware
+
+# Thermal / microcode
 thermald
 iucode-tool
