@@ -24,10 +24,11 @@ concurrency:
 
 jobs:
   build:
-    # Depot GitHub Actions runner: Depot's fast machines, but the workflow
-    # stays inside GitHub Actions — so artifact upload and GitHub Releases
-    # work natively (standalone Depot CI in .depot/ could not do either).
-    runs-on: depot-ubuntu-latest-8
+    # GitHub-hosted runner: artifact upload and GitHub Releases work natively.
+    # (Depot options tried and rolled back: standalone Depot CI couldn't write
+    # GitHub artifacts/releases at all, and depot-* runner labels sat queued —
+    # Depot GitHub Actions runners aren't enabled for this org.)
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       packages: write
