@@ -1,0 +1,123 @@
+name: Boot Test (KVM)
+
+# Boots the built ISO in QEMU with real hardware virtualization (GitHub's
+# x86_64 runners expose /dev/kvm) and uploads a screenshot timeline of the
+# VM's screen. This is the honest "does it boot to a desktop" check that
+# x86-on-ARM emulation cannot provide.
+
+on:
+  workflow_run:
+    workflows: ["Build Zog ISO"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Build run ID to test (empty = latest successful build on main)"
+        required: false
+        default: ""
+
+jobs:
+  boot-test:
+    runs-on: ubuntu-latest
+    # Only auto-run when the build actually succeeded
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    timeout-minutes: 30
+
+    steps:
+      - name: Resolve build run ID
+        id: run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            echo "id=${{ github.event.workflow_run.id }}" >> "$GITHUB_OUTPUT"
+          elif [ -n "${{ inputs.run_id }}" ]; then
+            echo "id=${{ inputs.run_id }}" >> "$GITHUB_OUTPUT"
+          else
+            id=$(gh api "repos/${{ github.repository }}/actions/workflows/build-iso.yml/runs?branch=main&status=success&per_page=1" --jq '.workflow_runs[0].id')
+            echo "id=$id" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download ISO artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: iso-artifact
+          run-id: ${{ steps.run.outputs.id }}
+          github-token: ${{ github.token }}
+          path: iso
+
+      - name: Install QEMU + OVMF
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q qemu-system-x86 ovmf imagemagick socat
+          # Grant runner access to hardware virtualization
+          sudo chmod 666 /dev/kvm
+          ls -lh iso/
+
+      - name: Boot ISO and capture screenshots
+        run: |
+          ISO=$(ls iso/*.iso)
+          mkdir -p shots
+          cp /usr/share/OVMF/OVMF_VARS_4M.fd ovmf_vars.fd
+
+          qemu-system-x86_64 \
+            -enable-kvm -cpu host -smp 4 -m 4096 \
+            -M q35 \
+            -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd \
+            -drive if=pflash,format=raw,file=ovmf_vars.fd \
+            -cdrom "$ISO" -boot d \
+            -device virtio-vga \
+            -display none \
+            -serial file:serial.log \
+            -qmp unix:qmp.sock,server,nowait \
+            -daemonize -pidfile qemu.pid
+
+          screendump() {
+            python3 - "$1" <<'PY'
+          import json, socket, sys
+          s = socket.socket(socket.AF_UNIX)
+          s.connect("qmp.sock")
+          f = s.makefile("rw")
+          f.readline()
+          f.write(json.dumps({"execute": "qmp_capabilities"}) + "\n"); f.flush(); f.readline()
+          f.write(json.dumps({"execute": "screendump", "arguments": {"filename": sys.argv[1]}}) + "\n"); f.flush(); f.readline()
+          PY
+          }
+
+          # Screenshot timeline: boot menu -> kernel -> SDDM -> Plasma
+          start=$(date +%s)
+          for t in 20 60 120 200 300 420; do
+            now=$(date +%s); wait=$((start + t - now))
+            [ $wait -gt 0 ] && sleep $wait
+            screendump "$PWD/shots/boot-${t}s.ppm" || true
+            echo "screenshot at ${t}s"
+          done
+
+          # Convert to PNG
+          for f in shots/*.ppm; do
+            convert "$f" "${f%.ppm}.png" && rm "$f"
+          done
+          ls -lh shots/
+
+          kill "$(cat qemu.pid)" 2>/dev/null || true
+
+      - name: Evaluate result
+        run: |
+          # A booted desktop draws a real image; a hung/crashed boot leaves the
+          # final frame black (or a bare text dump). Fail only on a black screen.
+          final=$(ls shots/boot-420s.png 2>/dev/null || ls shots/*.png | tail -1)
+          mean=$(convert "$final" -colorspace Gray -format "%[fx:mean]" info:)
+          echo "Final frame: $final — mean brightness: $mean"
+          awk -v m="$mean" 'BEGIN { exit (m > 0.01) ? 0 : 1 }' \
+            || { echo "::error::Final screen is black — boot likely hung/crashed. Check the screenshot artifacts."; exit 1; }
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boot-screenshots
+          path: |
+            shots/
+            serial.log
+          retention-days: 14
