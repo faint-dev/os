@@ -34,6 +34,7 @@ spectacle
 ffmpegthumbs
 kdegraphics-thumbnailers
 
-# Icons & cursors (Bibata via chaotic-aur)
+# Icons & cursors (Bibata via chaotic-aur; package ships all Bibata variants
+# including Bibata-Modern-Classic)
 papirus-icon-theme
-bibata-cursor-theme-bin
+bibata-cursor-theme

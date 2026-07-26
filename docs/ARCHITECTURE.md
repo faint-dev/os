@@ -113,8 +113,9 @@ GitHub Actions:
 
 - **Icon theme:** Papirus-Dark (`papirus-icon-theme`, official Arch repo) — set as
   default in skel `kdeglobals`
-- **Cursor theme:** Bibata Modern Classic (`bibata-cursor-theme-bin` via
-  chaotic-aur, same build-time repo used for Calamares) — wired as the
+- **Cursor theme:** Bibata Modern Classic (`bibata-cursor-theme` via
+  chaotic-aur at build time; Calamares itself comes from the EndeavourOS
+  repo, also build-time only) — wired as the
   system-wide default (`/usr/share/icons/default/index.theme`), in KDE
   (`kdeglobals` `[Cursor]`), and in Hyprland (`XCURSOR_THEME`/`XCURSOR_SIZE`
   env vars)

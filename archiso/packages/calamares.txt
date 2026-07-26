@@ -1,4 +1,6 @@
-# Installer (calamares + ckbcomp from chaotic-aur, build-time repo only;
-# runtime deps like Qt/KDE Frameworks/boost auto-resolve via pacman)
+# Installer — calamares comes from the EndeavourOS repo (Arch-compatible
+# build; not in official repos or chaotic-aur), ckbcomp from chaotic-aur.
+# Both repos are build-time only and never enabled on installed systems;
+# the Calamares shellprocess module removes these packages after install.
 calamares
 ckbcomp

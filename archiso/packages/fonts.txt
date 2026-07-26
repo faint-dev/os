@@ -1,4 +1,4 @@
-ttf-inter
+inter-font
 ttf-jetbrains-mono
 ttf-roboto
 ttf-ubuntu-font-family
