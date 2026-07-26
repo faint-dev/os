@@ -1,6 +1,5 @@
 # Browsers
 firefox
-firefox-developer-edition
 
 # Development
 code
@@ -21,7 +20,6 @@ vlc
 libreoffice-fresh
 gimp
 obs-studio
-audacity
 ffmpeg
 imagemagick
 yt-dlp
@@ -33,7 +31,6 @@ flatpak
 # Documents
 zathura
 zathura-pdf-mupdf
-calibre
 
 # Desktop essentials
 kitty

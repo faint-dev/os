@@ -2,6 +2,11 @@
 mesa
 intel-media-driver
 vulkan-intel
+# lib32 Intel drivers: without these, Steam's lib32-opengl/vulkan-driver
+# deps resolve alphabetically to lib32-nvidia-utils — ~800MB of NVIDIA
+# drivers on an Intel-only laptop
+lib32-mesa
+lib32-vulkan-intel
 
 # Audio stack (PipeWire; ThinkPad L13 11th-gen requires SOF firmware)
 pipewire

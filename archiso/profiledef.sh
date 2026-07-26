@@ -10,8 +10,12 @@ install_dir="arch"
 bootmodes=('uefi-x64.systemd-boot.esp' 'uefi-x64.systemd-boot.eltorito')
 arch="x86_64"
 pacman_conf="pacman.conf"
-airootfs_image_type="erofs"
-airootfs_image_compression="zstd"
+# squashfs + zstd: multithreaded compression (scales with CI cores), fast
+# boot-time decompression. NOTE: "airootfs_image_compression" is NOT a real
+# mkarchiso variable — compression must go via airootfs_image_tool_options,
+# otherwise the image ships uncompressed (14GB ISO instead of ~5GB).
+airootfs_image_type="squashfs"
+airootfs_image_tool_options=('-comp' 'zstd' '-Xcompression-level' '15' '-b' '1M')
 file_permissions=(
   ["/etc/shadow"]="0:0:400"
   ["/etc/gshadow"]="0:0:400"
