@@ -6,10 +6,21 @@ on:
       - main
     tags:
       - 'v*'
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
   workflow_dispatch:
+
+# A newer push supersedes any in-flight build of the same ref
+concurrency:
+  group: build-iso-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -28,6 +39,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Restore pacman package cache
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/pacman/pkg
+          key: pacman-pkg-${{ hashFiles('archiso/packages/*.txt') }}
+          restore-keys: |
+            pacman-pkg-
 
       - name: Install dependencies
         run: |
@@ -70,6 +89,9 @@ jobs:
             dist/*.iso
             dist/SHA256SUMS
           retention-days: 30
+          # The ISO's contents are already zstd-compressed (erofs); zipping
+          # a 6GB ISO again wastes minutes of CPU for ~0% size gain.
+          compression-level: 0
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')
