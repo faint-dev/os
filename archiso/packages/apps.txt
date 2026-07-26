@@ -56,3 +56,8 @@ pass
 keepassxc
 dconf-editor
 gnome-tweaks
+
+# These are installed via Flatpak post-install for best compatibility
+# flatpak install flathub com.discordapp.Discord
+# flatpak install flathub com.spotify.Client
+# spicetify-cli (AUR, can be installed post-install via yay)

@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# Zog Post-Install Setup Script
+# Installs optional applications: Discord, Spotify (with Spicetify), NordVPN, etc.
+
+set -e
+
+echo "=== Zog Post-Install Setup ==="
+echo ""
+echo "This script installs optional applications:"
+echo "  • Discord (Flatpak)"
+echo "  • Spotify (Flatpak) with Spicetify customization"
+echo "  • NordVPN (AUR via yay)"
+echo ""
+
+# Check for yay (AUR helper)
+if ! command -v yay &> /dev/null; then
+    echo "Installing yay (AUR helper)..."
+    sudo pacman -S --noconfirm git base-devel
+    cd /tmp
+    git clone https://aur.archlinux.org/yay-bin.git
+    cd yay-bin
+    makepkg -si --noconfirm
+    cd /
+    rm -rf /tmp/yay-bin
+fi
+
+# Install Flatpak apps
+echo ""
+echo "Setting up Flatpak..."
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || true
+
+read -p "Install Discord via Flatpak? (y/n) " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    flatpak install -y flathub com.discordapp.Discord
+    echo "✓ Discord installed"
+fi
+
+read -p "Install Spotify via Flatpak? (y/n) " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    flatpak install -y flathub com.spotify.Client
+    echo "✓ Spotify installed"
+    
+    read -p "Install Spicetify (Spotify customizer)? (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        yay -S --noconfirm spicetify-cli
+        echo "✓ Spicetify installed"
+        echo ""
+        echo "To customize Spotify with Spicetify:"
+        echo "  spicetify config"
+        echo "  spicetify apply"
+    fi
+fi
+
+read -p "Install NordVPN via AUR? (y/n) " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    yay -S --noconfirm nordvpn
+    sudo systemctl enable --now nordvpnd
+    echo "✓ NordVPN installed and enabled"
+    echo ""
+    echo "To connect to NordVPN:"
+    echo "  nordvpn login"
+    echo "  nordvpn connect"
+fi
+
+echo ""
+echo "=== Post-Install Setup Complete ==="

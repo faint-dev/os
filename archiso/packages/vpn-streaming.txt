@@ -1,0 +1,4 @@
+# VPN and Streaming Services
+nordvpn
+speedtest-cli
+python-pynvim
