@@ -1,0 +1,32 @@
+# Zog Plymouth Theme
+# Minimal boot splash with fade-in logo
+
+progress = 0;
+angle = 0;
+
+fun refresh_callback (delay) {
+    global.progress = global.progress + 0.05;
+    if (global.progress > 1)
+        global.progress = 1;
+    if (global.progress < 1)
+        Plymouth.SetRefreshFunction (refresh_callback, 30);
+}
+
+Plymouth.SetBootProgressFunction(fun(duration, progress) {
+    global.progress = progress;
+});
+
+message_callback = fun (message) {
+    if (message == "quit") {
+        global.progress = 1;
+    }
+};
+
+Plymouth.SetMessageFunction (message_callback);
+
+# Fade out on completion
+fun quit_callback () {
+    exit_fade_out = 1;
+};
+
+Plymouth.SetQuitFunction(quit_callback);

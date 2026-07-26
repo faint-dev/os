@@ -1,0 +1,7 @@
+[Unit]
+Description=Zog: Check for available system updates
+Documentation=https://wiki.archlinux.org/title/Pacman
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/zog-update-check

@@ -1,0 +1,11 @@
+[Unit]
+Description=Zog: Check for available system updates (daily)
+Documentation=https://wiki.archlinux.org/title/Pacman
+
+[Timer]
+OnCalendar=daily
+OnBootSec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

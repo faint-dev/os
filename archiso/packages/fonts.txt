@@ -1,0 +1,11 @@
+ttf-inter
+ttf-jetbrains-mono
+ttf-roboto
+ttf-ubuntu-font-family
+noto-fonts
+noto-fonts-emoji
+noto-fonts-cjk
+ttf-dejavu
+liberation-fonts
+ttf-liberation
+fontconfig

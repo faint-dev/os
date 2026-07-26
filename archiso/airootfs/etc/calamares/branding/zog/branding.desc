@@ -1,0 +1,30 @@
+---
+componentName: zog
+
+strings:
+    productName: Zog
+    shortProductName: Zog
+    versionedName: Zog Linux
+    shortVersionedProductName: Zog
+    bootloaderEntryName: Zog
+    productUrl: https://github.com/faint-dev/os
+    supportUrl: https://github.com/faint-dev/os/issues
+    knownIssuesUrl: https://github.com/faint-dev/os/issues
+    releaseNotesUrl: https://github.com/faint-dev/os/releases
+    donateUrl: https://github.com/faint-dev/os
+
+images:
+    productLogo: logo.svg
+    productIcon: logo.svg
+    productWallpaper: wallpaper.png
+
+slideshow:
+    enabled: true
+    slides: []
+
+colors:
+    text: "#c8c8d2"
+    textHighlight: "#5a60c8"
+    background: "#1a1c26"
+    sidebar: "#2d2e3f"
+    sidebarText: "#c8c8d2"

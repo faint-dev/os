@@ -1,0 +1,22 @@
+[General]
+ColorScheme=ZogDark
+font=Inter,11,-1,5,50,0,0,0,0,0
+
+[Icons]
+Theme=Papirus-Dark
+
+[Shortcuts]
+ActivateTaskManagerEntry=Meta+1,Meta+1,Activate Task Manager Entry
+ShowDesktop=Meta+D,Meta+D,Show Desktop
+RecentDocuments=Meta+E,Meta+E,Show Recent Documents
+
+[KDE]
+ColorScheme=ZogDark
+WidgetStyle=org.kde.desktop
+LookAndFeelPackage=org.zog.desktop
+
+[WM]
+activeBackground=86,96,137
+activeForeground=255,255,255
+inactiveBackground=60,64,86
+inactiveForeground=200,200,200

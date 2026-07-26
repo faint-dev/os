@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Zog
+Description=Zog Boot Animation
+ModuleTypes=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/zog
+ScriptFile=/usr/share/plymouth/themes/zog/zog.script

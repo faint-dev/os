@@ -1,0 +1,21 @@
+# Core system services
+enable systemd-timesyncd.service
+enable systemd-resolved.service
+enable systemd-networkd.service
+
+# Power and thermal management
+enable tlp.service
+enable thermald.service
+
+# Networking
+enable NetworkManager.service
+
+# Security
+enable ufw.service
+
+# Bluetooth
+enable bluetooth.service
+
+# Disable power-profiles-daemon (conflicts with TLP)
+disable power-profiles-daemon.service
+disable power-profiles-daemon.socket

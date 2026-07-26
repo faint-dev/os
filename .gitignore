@@ -1,0 +1,43 @@
+# Build outputs
+*.iso
+*.iso.sig
+out/
+work/
+dist/
+
+# Generated files
+archiso/packages.x86_64
+assets/*.png
+assets/*.svg
+theming/**/*.json
+
+# Local/temporary
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Makefile artifacts
+*.o
+*.a
+
+# IDE/editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Credentials
+.env
+.env.local
+secrets/
+
+# User-specific
+.cache/
+.local/

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Zog: Check for available pacman updates and send desktop notification
+
+set -euo pipefail
+
+# Get update count
+UPDATES=$(checkupdates 2>/dev/null | wc -l)
+
+if [[ $UPDATES -gt 0 ]]; then
+    SUMMARY="$UPDATES package updates available"
+    BODY="Run 'pacman -Syu' in a terminal or open Discover to update your system."
+
+    # Try multiple notification methods for robustness
+    if command -v notify-send &>/dev/null; then
+        notify-send -a "System Updates" -u normal "$SUMMARY" "$BODY"
+    fi
+fi

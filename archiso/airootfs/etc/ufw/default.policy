@@ -1,0 +1,16 @@
+# Default incoming policy
+*filter
+:ufw-before-input - [0:0]
+:ufw-before-output - [0:0]
+:ufw-before-forward - [0:0]
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+
+# Deny incoming, allow outgoing, allow ssh
+-A INPUT -j ufw-before-input
+-A OUTPUT -j ufw-before-output
+-A FORWARD -j ufw-before-forward
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+
+COMMIT

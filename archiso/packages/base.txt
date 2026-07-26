@@ -1,0 +1,17 @@
+base
+linux
+linux-lts
+linux-firmware
+intel-ucode
+systemd
+systemd-boot
+efibootmgr
+dosfstools
+lvm2
+cryptsetup
+mdadm
+mkinitcpio
+mkinitcpio-archiso
+grub
+grub-themes-zog
+os-prober

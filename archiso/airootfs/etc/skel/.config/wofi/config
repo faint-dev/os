@@ -1,0 +1,11 @@
+width=500
+height=600
+location=center
+show=drun
+prompt=Search...
+filter_rate=100
+allow_markup=true
+no_actions=true
+hide_search=false
+matching=contains
+insensitive=true

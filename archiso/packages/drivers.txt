@@ -1,0 +1,7 @@
+xf86-video-intel
+mesa
+libva-intel-driver
+intel-media-driver
+vulkan-intel
+thermald
+iucode-tool

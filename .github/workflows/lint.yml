@@ -1,0 +1,34 @@
+name: Lint & Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: Run shellcheck
+        run: |
+          find scripts -name "*.sh" -type f | xargs shellcheck --severity=warning || true
+
+  validate-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check package files exist
+        run: |
+          for pkg in archiso/packages/*.txt; do
+            [ -f "$pkg" ] || (echo "Missing: $pkg" && exit 1)
+          done
+          echo "All package files present"

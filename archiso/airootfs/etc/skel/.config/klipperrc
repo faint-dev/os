@@ -1,0 +1,10 @@
+[General]
+KeepClipboardContents=true
+MaxClipItems=100
+PopupUseSelection=true
+RemoveWhitespace=true
+
+[Shortcuts]
+CycleNextAction=Ctrl+Alt+X
+CycleNextClip=
+ToggleClipboardMenu=Ctrl+Alt+V

@@ -1,0 +1,11 @@
+# Mako notification config (Wayland)
+
+background-color=#1a1c26
+text-color=#c8c8d2
+border-color=#5a60c8
+border-size=2
+border-radius=12
+padding=12
+margin=12
+width=400
+height=120
