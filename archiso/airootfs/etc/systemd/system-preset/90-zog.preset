@@ -13,6 +13,11 @@ enable thermald.service
 enable NetworkManager.service
 enable bluetooth.service
 
+# Desktop (login manager + live-session setup; zog-live-setup is a no-op
+# outside the live ISO thanks to ConditionPathExists=/run/archiso)
+enable sddm.service
+enable zog-live-setup.service
+
 # Security
 enable ufw.service
 

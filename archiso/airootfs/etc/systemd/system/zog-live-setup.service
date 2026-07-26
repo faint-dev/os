@@ -1,0 +1,15 @@
+[Unit]
+Description=Zog live session setup (populate live user home from skel)
+# Only runs on the live ISO; inert on installed systems.
+ConditionPathExists=/run/archiso
+Before=sddm.service
+DefaultDependencies=no
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'mkdir -p /home/zog && cp -aT /etc/skel /home/zog && chown -R zog:zog /home/zog'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

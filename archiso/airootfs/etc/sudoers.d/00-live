@@ -1,0 +1,3 @@
+# Live session only — removed by the installer (Calamares shellprocess).
+# Calamares and system tools need passwordless elevation in the live env.
+%wheel ALL=(ALL:ALL) NOPASSWD: ALL
