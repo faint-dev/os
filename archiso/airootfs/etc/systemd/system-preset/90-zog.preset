@@ -1,21 +1,31 @@
-# Core system services
+# Zog Fast Boot Presets
+# Enable ONLY essential services, disable everything else
+
+# Core system (MANDATORY)
 enable systemd-timesyncd.service
 enable systemd-resolved.service
-enable systemd-networkd.service
 
-# Power and thermal management
+# Power & thermal (battery life critical)
 enable tlp.service
 enable thermald.service
 
-# Networking
+# Networking (Wi-Fi, Bluetooth)
 enable NetworkManager.service
+enable bluetooth.service
 
 # Security
 enable ufw.service
 
-# Bluetooth
-enable bluetooth.service
-
-# Disable power-profiles-daemon (conflicts with TLP)
+# Disable bloat (conflicts, slow startup)
 disable power-profiles-daemon.service
 disable power-profiles-daemon.socket
+disable ModemManager.service
+disable ModemManager-wait-for-devices.service
+disable avahi-daemon.service
+disable avahi-daemon.socket
+disable cups.service
+disable cups.socket
+disable cups-browsed.service
+disable bluetooth.socket
+disable systemd-networkd.service
+disable systemd-networkd.socket

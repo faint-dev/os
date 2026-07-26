@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Zog archiso profile - optimized for fast boot
 
 iso_name="zog"
 iso_label="ZOG_$(date +%Y%m%d)"
@@ -10,6 +11,7 @@ bootmodes=('uefi-x64.efi' 'uefi-ia32.efi')
 arch="x86_64"
 pacman_conf="pacman.conf"
 airootfs_image_type="erofs"
+airootfs_image_compression="zstd"
 file_permissions=(
   ["/etc/shadow"]="0:0:400"
   ["/etc/gshadow"]="0:0:400"

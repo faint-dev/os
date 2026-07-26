@@ -10,9 +10,7 @@ docker
 docker-compose
 git
 neovim
-gvim
 vlc
-libreoffice
 libreoffice-fresh
 gimp
 flatpak
@@ -26,10 +24,6 @@ youtube-dl
 yt-dlp
 ffmpeg
 imagemagick
-ghostscript
-aspell
-aspell-en
-aspell-uk
 xdg-utils
 xdg-user-dirs
 file-roller
@@ -38,7 +32,6 @@ unrar
 transmission-gtk
 qbittorrent
 calibre
-blender
 audacity
 networkmanager
 network-manager-applet
@@ -48,16 +41,9 @@ alsa-utils
 pavucontrol
 ufw
 openssh
-openssh-askpass
 keychain
 seahorse
 gnupg
 pass
 keepassxc
 dconf-editor
-gnome-tweaks
-
-# These are installed via Flatpak post-install for best compatibility
-# flatpak install flathub com.discordapp.Discord
-# flatpak install flathub com.spotify.Client
-# spicetify-cli (AUR, can be installed post-install via yay)

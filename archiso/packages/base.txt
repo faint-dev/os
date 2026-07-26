@@ -12,6 +12,4 @@ cryptsetup
 mdadm
 mkinitcpio
 mkinitcpio-archiso
-grub
-grub-themes-zog
 os-prober
